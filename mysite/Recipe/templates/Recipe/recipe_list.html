@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'Recipe/base.html' %}
+
 <head>
-    <meta charset="UTF-8">
     <title>List of Recipes</title>
 </head>
-<body>
+
+
+{% block body %}
     {% for recipe in recipes %}
         <div>
             <p>Recipe: {{recipe.name|linebreaksbr}}</p>
-
         </div>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
