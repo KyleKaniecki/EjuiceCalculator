@@ -1,4 +1,4 @@
-{% extends 'Recipe/base.html' %}
+{% extends 'base.html' %}
 
 <head>
     <title>List of Recipes</title>
@@ -6,9 +6,60 @@
 
 
 {% block body %}
+
     {% for recipe in recipes %}
+
         <div>
-            <p>Recipe: {{recipe.name|linebreaksbr}}</p>
+
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{recipe.name}}</h3>
+                </div>
+
+                <div class="panel-body">
+<!--
+                    <p>Target Amount: {{recipe.targetAmount}}</p>
+
+                    <p>Target Nicotine: {{recipe.targetNicotine}}</p>
+
+                    <p>VG/PG: {{recipe.vgRatio}}/{{recipe.pgRatio}}</p>
+
+                    <p>Days to Steep: {{recipe.daysToSteep}}</p>
+-->
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Flavoring</th>
+                                <th>Percentage %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {% for flavor in recipe.flavoring.all %}
+                                        {{ flavor.name|linebreaks }}
+                                    {% endfor %}
+                                </td>
+
+                                <td>
+                                    {% for flavor in recipe.flavoring.all %}
+                                        {{ flavor.percentage|linebreaks }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    {% if recipe.notes|length > 0 %}
+                        <p>Notes: {{recipe.notes}}</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
         </div>
+
     {% endfor %}
 {% endblock %}
