@@ -8,7 +8,8 @@
 <html lang="en">
 
 <head>
-    <title>Calculator</title>
+    {% block title %}
+    {% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static '/css/Cerulean.css' %}"/>
 </head>
 
@@ -23,12 +24,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'recipe_list' %}">Home</a>
+      <a class="navbar-brand" href="#">Home</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Recipes <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="{% url 'recipe_list' %}">My Recipes <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Users</a></li>
 
       </ul>
