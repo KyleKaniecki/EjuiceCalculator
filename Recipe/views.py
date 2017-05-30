@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Recipe, Flavoring
 from .forms import RecipeForm
+from django.forms import inlineformset_factory
 
 
 def recipe_list(request):
@@ -28,9 +29,22 @@ def recipe_edit(request, pk):
         if form.is_valid():
             recipe = form.save(commit=False)
             recipe.name = request.name
-            recipe.daysToSteep = request.daysToSteep
+            recipe.daysToSteep = request.daysToSteepx
             recipe.save()
             return redirect('recipe_edit', pk=recipe.pk)
     else:
         recipe = RecipeForm(instance=recipe)
     return render(request, 'Recipe/recipe_edit.html', {'recipe': recipe})
+
+
+def flavorings_edit(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    FlavoringInlineFormSet = inlineformset_factory(Recipe, Flavoring, fields=('name',))
+    if request.method == "POST":
+        formset = FlavoringInlineFormSet(request.POST, request.FILES, instance=recipe)
+        if formset.is_valid():
+            formset.save()
+            return redirect('recipe_list')
+    else:
+        formset = FlavoringInlineFormSet(instance=recipe)
+    return render(request, 'Recipe/recipe_edit.html', {'formset': formset})

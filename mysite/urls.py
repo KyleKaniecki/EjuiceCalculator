@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^recipes/', include('Recipe.urls')),
+    #url(r'^$', 'home.views.index'),
 ]

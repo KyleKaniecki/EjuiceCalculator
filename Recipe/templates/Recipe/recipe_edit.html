@@ -9,9 +9,18 @@
 
 {% block body %}
 
+
     <h1>Edit Recipe</h1>
     <p>Name: {{ recipe.name }}</p>
     <p>Days to Steep: {{ recipe.daysToSteep }}</p>
     <p>Notes: {{ recipe.notes }}</p>
+    <p>flavors:
+        {% for flavor in recipe.flavoring.all %}
+            {{ flavor.name|linebreaks }}
+        {% endfor %}</p>
+
+    <button type="submit" class="save btn btn-primary">Save</button>
+
+
 
 {% endblock %}
