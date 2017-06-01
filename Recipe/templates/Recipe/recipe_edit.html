@@ -9,17 +9,31 @@
 
 {% block body %}
 
+    <div class="container col-md-12">
+        <h1>Edit Recipe</h1>
+        {% include 'elements/alert.html' %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in recipeform %}
+                {% if field.errors %}
+                    <label>{{ field.label }}<span style="color: red">{{ field.errors }}</span></label>
+                    {{ field }}
+                {% else %}
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                {% endif %}
+                <br>
+            {% endfor %}
+            <ul class="list-group">
+                {% for flav in recipe.flavoring.all %}
+                    <li class="list-group-item">{{flav.name}}</li>
+                    <li class="list-group-item">{{flav.percentage}}</li>
+                {% endfor %}
+            </ul>
 
-    <h1>Edit Recipe</h1>
-    <p>Name: {{ recipe.name }}</p>
-    <p>Days to Steep: {{ recipe.daysToSteep }}</p>
-    <p>Notes: {{ recipe.notes }}</p>
-    <p>flavors:
-        {% for flavor in recipe.flavoring.all %}
-            {{ flavor.name|linebreaks }}
-        {% endfor %}</p>
-
-    <button type="submit" class="save btn btn-primary">Save</button>
+        <button type="submit" class="save btn btn-primary">Save</button>
+        </form>
+    </div>
 
 
 

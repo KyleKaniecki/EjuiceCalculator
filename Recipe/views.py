@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 from .models import Recipe, Flavoring
 from .forms import RecipeForm
 from django.forms import inlineformset_factory
@@ -27,14 +28,15 @@ def recipe_edit(request, pk):
     if request.method == "POST":
         form = RecipeForm(request.POST, instance=recipe)
         if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.name = request.name
-            recipe.daysToSteep = request.daysToSteepx
-            recipe.save()
+            recipe = form.save()
+            messages.add_message(request,messages.SUCCESS,"Updated recipe successfully!")
             return redirect('recipe_edit', pk=recipe.pk)
     else:
-        recipe = RecipeForm(instance=recipe)
-    return render(request, 'Recipe/recipe_edit.html', {'recipe': recipe})
+        recipeform = RecipeForm(instance=recipe)
+        recipe = Recipe.objects.get(id=pk)
+
+    return render(request, 'Recipe/recipe_edit.html', {'recipeform': recipeform,
+                                                       'recipe':recipe})
 
 
 def flavorings_edit(request, pk):
