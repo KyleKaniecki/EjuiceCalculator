@@ -100,3 +100,6 @@ ENV/
 
 .idea/*
 db.sqlite3
+
+# Mac File stuff
+.DS_Store
